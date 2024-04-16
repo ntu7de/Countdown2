@@ -8,7 +8,7 @@ export const BookList = ({ arrOfBooks }) => {
         <>
             {arrOfBooks.map((book) => { return (
                 <ul>
-                    <li key={book.title}>{book.title}, {book.author}, {book.price}</li>
+                    <li key={book.title}><i>{book.title}</i>, {book.author}, {book.price}</li>
                 </ul>
             )})}
         </>
