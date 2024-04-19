@@ -10,7 +10,7 @@ const TriviaApp = () => {
             const data = await fetch("https://the-trivia-api.com/v2/questions");
             const json = await data.json();
             setQuestions(json);
-            console.log(json[0]['question']['text']);
+            // console.log(json[0]['question']['text']);
         }
 
         fetchData();
