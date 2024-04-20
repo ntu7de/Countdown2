@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import '../styles/TriviaApp.css'
 
 const TriviaApp = () => {
 
     const [questions, setQuestions] = useState([]);
+    const [selectedAnswer, setSelectedAnswer] = useState(null);
+    const [isCorrect, setIsCorrect] = useState(null);
     
     useEffect(() => {
         // fetch trivia questions
@@ -25,13 +28,18 @@ const TriviaApp = () => {
         return answers;
     }
 
-    function checkAnswer(question, givenAnswer) {
-        
+    const handleAnswerClick = (questionsData, answer) => {
+        setSelectedAnswer(answer);
+        if (answer === questionsData.correctAnswer) {
+            setIsCorrect(true);
+        } else {
+            setIsCorrect(false);
+        }
     }
 
     return (
         <>
-            <h1>Trivia App</h1>
+            <h1>Trivia Game</h1>
             {questions.map((questionData, index) => { 
                 
                 const answers = [questionData.correctAnswer, ...questionData.incorrectAnswers];
@@ -42,7 +50,11 @@ const TriviaApp = () => {
                     <h3>{questionData.question.text}</h3>
                     <ul key={`ul_${index}`}>
                         {shuffledAnswers.map((answer, idx) => { return (
-                            <li><button key={idx}>{answer}</button></li>
+                            <li><button 
+                                key={idx} 
+                                className={selectedAnswer === answer ? (isCorrect ? 'correct' : 'incorrect') : ''}
+                                onClick={() => handleAnswerClick(questionData,answer)}
+                            > {answer}</button></li>
                         )})}
                     </ul>
                 </div>
