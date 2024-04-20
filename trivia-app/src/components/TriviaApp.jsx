@@ -15,19 +15,35 @@ const TriviaApp = () => {
 
         fetchData();
 
-    }, [])
+    }, []);
+
+    const shuffleAnswers = (answers) => {
+        for (let i = answers.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [answers[i], answers[j]] = [answers[j], answers[i]];
+        }
+        return answers;
+    }
+
+    function checkAnswer(question, givenAnswer) {
+        
+    }
 
     return (
         <>
             <h1>Trivia App</h1>
-            {questions.map((questionData, index) => { return (
+            {questions.map((questionData, index) => { 
+                
+                const answers = [questionData.correctAnswer, ...questionData.incorrectAnswers];
+                const shuffledAnswers = shuffleAnswers(answers);
+
+                return (
                 <div key={index}>
                     <h3>{questionData.question.text}</h3>
                     <ul key={`ul_${index}`}>
-                        {questionData.incorrectAnswers.map((answer, idx) => { return (
+                        {shuffledAnswers.map((answer, idx) => { return (
                             <li><button key={idx}>{answer}</button></li>
                         )})}
-                        <li><button>{questionData.correctAnswer}</button></li>
                     </ul>
                 </div>
                 
