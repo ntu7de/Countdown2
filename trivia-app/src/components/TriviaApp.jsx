@@ -10,7 +10,7 @@ const TriviaApp = () => {
             const data = await fetch("https://the-trivia-api.com/v2/questions");
             const json = await data.json();
             setQuestions(json);
-            // console.log(json[0]['question']['text']);
+            console.log(json[0]['incorrectAnswers']);
         }
 
         fetchData();
@@ -20,9 +20,17 @@ const TriviaApp = () => {
     return (
         <>
             <h1>Trivia App</h1>
-            <p></p>
             {questions.map((questionData, index) => { return (
-                <li key={index}>{questionData.question.text}</li>
+                <div key={index}>
+                    <h3>{questionData.question.text}</h3>
+                    <ul key={`ul_${index}`}>
+                        {questionData.incorrectAnswers.map((answer, idx) => { return (
+                            <li><button key={idx}>{answer}</button></li>
+                        )})}
+                        <li><button>{questionData.correctAnswer}</button></li>
+                    </ul>
+                </div>
+                
             )})}
         </>
     )
